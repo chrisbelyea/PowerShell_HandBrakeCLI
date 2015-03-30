@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+
+<style>
+    body {        
+        margin: 2em;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+	
+	#playlist li{
+		cursor:pointer;
+	}
+
+	#videoarea {
+		width: 480px;	
+		max-height: 360px;
+		border:1px solid silver;
+	}
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<video id="videoarea" controls="controls" poster="" src="/video/demo-1000.mp4"></video>
+
+<p><em>Thank you for using nginx.</em></p>
+
+<script>
+	var movieList = ['demo-1000','demo-1001','demo-1002','demo-1003','demo-1004'];
+	var count = 1;	
+	var v = document.getElementsByTagName("video")[0];
+	
+	v.addEventListener("ended", function() {nextVideo(count)}, true);	
+	
+	// Autoplay remaining videos
+	function nextVideo(i){	
+		v.setAttribute('src','/video/' + movieList[i] + '.mp4');			
+		v.setAttribute('autoplay','autoplay');
+		count = i + 1;						
+	}
+	
+	// Play selected video
+	function playSelected(i){
+		alert('playSelected called')
+	}
+	
+</script>
+<!--
+How to make it work:
+	1. Provide a list of the video clips
+	2. On page load, start with the first video.
+	3. User clicking on a different video link loads the selected video into player and beings playing
+	4. Once video is played, autoplay the next video (in order); continue playing until the end of all videos.
+-->
+</body>
+</html>
