@@ -70,10 +70,18 @@ working. Further configuration is required.</p>
 		count = i + 1;						
 	}
 	
+	// Update description
+	function updateDescription(i){
+		d.innerHTML = movieList[i].description;
+	}
+	
 	// Play selected video
 	function playSelected(i){
 		alert('playSelected called')
 	}
+	
+	// Load the first description
+	updateDescription(0);
 	
 </script>
 <!--
