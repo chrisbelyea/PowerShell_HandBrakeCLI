@@ -65,7 +65,7 @@ working. Further configuration is required.</p>
 	var d = document.getElementById("description");	
 	var t = document.getElementById("playlist");	
 	v.addEventListener("ended", function() {nextVideo(count)}, true);	
-	
+		
 	// Autoplay remaining videos
 	function nextVideo(i){	
 		if (i === movieList.length) {
@@ -87,15 +87,16 @@ working. Further configuration is required.</p>
 	
 	// Play selected video
 	function playSelected(i){
-		alert('playSelected called')
+		nextVideo(i);
 	}
 	
 	function createTrackList(){
 		var listing = "";
 		for (i = 0; i < movieList.length; i ++){
-			listing += ("<a href='" + movieList[i].title + "'>" + movieList[i].title + "</a><br />");
+			listing += ("<a href='#' class='track' onclick='playSelected(" + i + ")'>" + movieList[i].title + "</a><br />");
 		}
 		t.innerHTML = listing;
+		
 	}
 	
 	// Load first video and description
@@ -112,6 +113,5 @@ How to make it work:
 	3. User clicking on a different video link loads the selected video into player and beings playing
 	4. Once video is played, autoplay the next video (in order); continue playing until the end of all videos.
 -->
-</script>
 </body>
 </html>
