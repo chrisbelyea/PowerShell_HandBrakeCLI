@@ -27,6 +27,7 @@ working. Further configuration is required.</p>
 
 <video id="videoarea" controls="controls" poster="" src="/video/demo-1000.mp4"></video>
 <div id="description"></div>
+<div id="playlist"></div>
 
 <p><em>Thank you for using nginx.</em></p>
 
@@ -34,22 +35,27 @@ working. Further configuration is required.</p>
 	var movieList = [
 		{
 			"src" : "demo-1000.mp4",
+			"title" : "Title 01",
 			"description" : "These are the voyages of the Starship Enterprise. Its continuing mission, to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no one has gone before."
 		},
 		{
 			"src" : "demo-1001.mp4",
+			"title" : "Title 02",
 			"description" : "We need to neutralize the homing signal. Each unit has total environmental control, gravity, temperature, atmosphere, light, in a protective field."
 		},
 		{
 			"src" : "demo-1002.mp4",
+			"title" : "Title 03",
 			"description" : "Sensors show energy readings in your area. We had a forced chamber explosion in the resonator coil. Field strength has increased by 3,000 percent."
 		},
 		{
 			"src" : "demo-1003.mp4",
+			"title" : "Title 04",
 			"description" : "Sensors indicate human life forms 30 meters below the planet's surface. Stellar flares are increasing in magnitude and frequency."
 		},
 		{
 			"src" : "demo-1004.mp4",
+			"title" : "Title 05",
 			"description" : "Resistance is futile."
 		}
 	];
@@ -57,6 +63,7 @@ working. Further configuration is required.</p>
 	var count = 0;	
 	var v = document.getElementsByTagName("video")[0];
 	var d = document.getElementById("description");	
+	var t = document.getElementById("playlist");	
 	v.addEventListener("ended", function() {nextVideo(count)}, true);	
 	
 	// Autoplay remaining videos
@@ -83,8 +90,19 @@ working. Further configuration is required.</p>
 		alert('playSelected called')
 	}
 	
+	function createTrackList(){
+		var listing = "";
+		for (i = 0; i < movieList.length; i ++){
+			listing += ("<a href='" + movieList[i].title + "'>" + movieList[i].title + "</a><br />");
+		}
+		t.innerHTML = listing;
+	}
+	
 	// Load first video and description
 	nextVideo(0);
+	
+	// Create track list
+	createTrackList();
 	
 </script>
 <!--
