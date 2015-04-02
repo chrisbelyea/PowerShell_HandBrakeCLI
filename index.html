@@ -1,117 +1,108 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Welcome to nginx!</title>
-
-<style>
-    body {        
-        margin: 2em;
-        font-family: Tahoma, Verdana, Arial, sans-serif;
-    }
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PowerShell_HandBrakeCLI</title>
+    <link rel="stylesheet" href="css/foundation.min.css" />    
+  </head>
+  <body>
+    
+    <div class="row">
+      <div class="large-12 columns">
+        <h1>PowerShell_HandBrakeCLI</h1>
+      </div>
+    </div>
+    
+    <div class="row">
+		<div class="small-12 columns">
+			<!-- content goes here -->
+		</div>
+	</div>
 	
-	#playlist li{
-		cursor:pointer;
-	}
-
-	#videoarea {
-		width: 100%;
-		max-width: 800px;		
-		border:1px solid silver;
-	}
-</style>
-</head>
-<body>
-<h1>Welcome to nginx!</h1>
-<p>If you see this page, the nginx web server is successfully installed and
-working. Further configuration is required.</p>
-
-<video id="videoarea" controls="controls" poster="" src="/video/demo-1000.mp4"></video>
-<div id="description"></div>
-<div id="playlist"></div>
-
-<p><em>Thank you for using nginx.</em></p>
-
-<script>
-	var movieList = [
-		{
-			"src" : "demo-1000.mp4",
-			"title" : "Title 01",
-			"description" : "These are the voyages of the Starship Enterprise. Its continuing mission, to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no one has gone before."
-		},
-		{
-			"src" : "demo-1001.mp4",
-			"title" : "Title 02",
-			"description" : "We need to neutralize the homing signal. Each unit has total environmental control, gravity, temperature, atmosphere, light, in a protective field."
-		},
-		{
-			"src" : "demo-1002.mp4",
-			"title" : "Title 03",
-			"description" : "Sensors show energy readings in your area. We had a forced chamber explosion in the resonator coil. Field strength has increased by 3,000 percent."
-		},
-		{
-			"src" : "demo-1003.mp4",
-			"title" : "Title 04",
-			"description" : "Sensors indicate human life forms 30 meters below the planet's surface. Stellar flares are increasing in magnitude and frequency."
-		},
-		{
-			"src" : "demo-1004.mp4",
-			"title" : "Title 05",
-			"description" : "Resistance is futile."
-		}
-	];
+	<div class="row">
+		<div class="small-12 medium-6 columns">
+			<video id="videoarea" controls="controls" poster="" src="/video/demo-1000.mp4"></video>
+			<div id="description"></div>
+		</div>
+		<div class="small-12 medium-6 columns">
+			<div id="playlist"></div>
+		</div>
+    </div>
 	
-	var count = 0;	
-	var v = document.getElementsByTagName("video")[0];
-	var d = document.getElementById("description");	
-	var t = document.getElementById("playlist");	
-	v.addEventListener("ended", function() {nextVideo(count)}, true);	
+	<script>
+		var movieList = [
+			{
+				"src" : "demo-1000.mp4",
+				"title" : "Title 01",
+				"description" : "These are the voyages of the Starship Enterprise. Its continuing mission, to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no one has gone before."
+			},
+			{
+				"src" : "demo-1001.mp4",
+				"title" : "Title 02",
+				"description" : "We need to neutralize the homing signal. Each unit has total environmental control, gravity, temperature, atmosphere, light, in a protective field."
+			},
+			{
+				"src" : "demo-1002.mp4",
+				"title" : "Title 03",
+				"description" : "Sensors show energy readings in your area. We had a forced chamber explosion in the resonator coil. Field strength has increased by 3,000 percent."
+			},
+			{
+				"src" : "demo-1003.mp4",
+				"title" : "Title 04",
+				"description" : "Sensors indicate human life forms 30 meters below the planet's surface. Stellar flares are increasing in magnitude and frequency."
+			},
+			{
+				"src" : "demo-1004.mp4",
+				"title" : "Title 05",
+				"description" : "Resistance is futile."
+			}
+		];
 		
-	// Autoplay remaining videos
-	function nextVideo(i){	
-		if (i === movieList.length) {
-			return
-			};
-		v.setAttribute('src','/video/' + movieList[i].src);
-		updateDescription(i);
-		if (v.getAttribute('autoplay')!=="" && i > 0) {			
-			v.setAttribute('autoplay');				
-			};
-		count = i + 1;						
-	}
-	
-	// Update description
-	function updateDescription(i){
-		d.innerHTML = movieList[i].description;
-	}
-	
-	
-	// Play selected video
-	function playSelected(i){
-		nextVideo(i);
-	}
-	
-	function createTrackList(){
-		var listing = "";
-		for (i = 0; i < movieList.length; i ++){
-			listing += ("<a href='#' class='track' onclick='playSelected(" + i + ")'>" + movieList[i].title + "</a><br />");
+		var count = 0;	
+		var v = document.getElementsByTagName("video")[0];
+		var d = document.getElementById("description");	
+		var t = document.getElementById("playlist");	
+		v.addEventListener("ended", function() {nextVideo(count)}, true);	
+			
+		// Autoplay remaining videos
+		function nextVideo(i){	
+			if (i === movieList.length) {
+				return
+				};
+			v.setAttribute('src','/video/' + movieList[i].src);
+			updateDescription(i);
+			if (v.getAttribute('autoplay')!=="" && i > 0) {			
+				v.setAttribute('autoplay');				
+				};
+			count = i + 1;						
 		}
-		t.innerHTML = listing;
 		
-	}
-	
-	// Load first video and description
-	nextVideo(0);
-	
-	// Create track list
-	createTrackList();
-	
-</script>
-<!--
-How to make it work:
-	1. Provide a list of the video clips
-	2. On page load, start with the first video.
-	3. User clicking on a different video link loads the selected video into player and beings playing
-	4. Once video is played, autoplay the next video (in order); continue playing until the end of all videos.
--->
-</body>
+		// Update description
+		function updateDescription(i){
+			d.innerHTML = movieList[i].description;
+		}
+		
+		
+		// Play selected video
+		function playSelected(i){
+			nextVideo(i);
+		}
+		
+		function createTrackList(){
+			var listing = "";
+			for (i = 0; i < movieList.length; i ++){
+				listing += ("<a href='#' class='track' onclick='playSelected(" + i + ")'>" + movieList[i].title + "</a><br />");
+			}
+			t.innerHTML = listing;
+			
+		}
+		
+		// Load first video and description
+		nextVideo(0);
+		
+		// Create track list
+		createTrackList();	
+	</script>
+	</body>
 </html>
