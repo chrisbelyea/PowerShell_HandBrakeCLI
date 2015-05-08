@@ -4,12 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PowerShell_HandBrakeCLI</title>
-    <link rel="stylesheet" href="css/foundation.min.css" />
-	<style>
+    <link rel="stylesheet" href="css/foundation.min.css" />    
+    <style>
 		video {
 			width: 100%;
 		}
-	</style>	
+	</style>
   </head>
   <body>
     
@@ -27,55 +27,48 @@
 	
 	<div class="row">
 		<div class="small-12 medium-6 large-9 columns">
-			<video id="videoarea" controls="controls" poster="" src="/video/demo-1000.mp4"></video>
+			<video id="videoarea" controls="controls" poster="" src=""></video>
 			<div id="description"></div>
 		</div>
 		<div class="small-12 medium-6 large-3 columns">
 			<div id="playlist"></div>
 		</div>
     </div>
+
+	<script>
+		var tracklist;
+		
+		function getTrackList(result) {			
+			tracklist = JSON.parse(result);			
+			createTrackList(tracklist);
+			nextVideo(0);
+		}	
+		
+		// Generic XMLHttprequest function
+		function makeRequest(callback, file) {
+			var httpRequest = new XMLHttpRequest();			
+			httpRequest.onload = function(){ // when the request is loaded
+			   callback(httpRequest.response);// we're calling our method
+			};
+			httpRequest.open('GET', file);
+			httpRequest.send();
+		}
+	</script>
 	
 	<script>
-		var movieList = [
-			{
-				"src" : "demo-1000.mp4",
-				"title" : "Title 01",
-				"description" : "These are the voyages of the Starship Enterprise. Its continuing mission, to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no one has gone before."
-			},
-			{
-				"src" : "demo-1001.mp4",
-				"title" : "Title 02",
-				"description" : "We need to neutralize the homing signal. Each unit has total environmental control, gravity, temperature, atmosphere, light, in a protective field."
-			},
-			{
-				"src" : "demo-1002.mp4",
-				"title" : "Title 03",
-				"description" : "Sensors show energy readings in your area. We had a forced chamber explosion in the resonator coil. Field strength has increased by 3,000 percent."
-			},
-			{
-				"src" : "demo-1003.mp4",
-				"title" : "Title 04",
-				"description" : "Sensors indicate human life forms 30 meters below the planet's surface. Stellar flares are increasing in magnitude and frequency."
-			},
-			{
-				"src" : "demo-1004.mp4",
-				"title" : "Title 05",
-				"description" : "Resistance is futile."
-			}
-		];
-		
 		var count = 0;	
 		var v = document.getElementsByTagName("video")[0];
 		var d = document.getElementById("description");	
 		var t = document.getElementById("playlist");	
+		
 		v.addEventListener("ended", function() {nextVideo(count)}, true);	
 			
 		// Autoplay remaining videos
 		function nextVideo(i){	
-			if (i === movieList.length) {
+			if (i === tracklist.length) {
 				return
 				};
-			v.setAttribute('src','/video/' + movieList[i].src);
+			v.setAttribute('src','/video/' + tracklist[i].src);
 			updateDescription(i);
 			if (v.getAttribute('autoplay')!=="" && i > 0) {			
 				v.setAttribute('autoplay');				
@@ -85,7 +78,7 @@
 		
 		// Update description
 		function updateDescription(i){
-			d.innerHTML = movieList[i].description;
+			d.innerHTML = tracklist[i].description;
 		}
 		
 		
@@ -93,21 +86,19 @@
 		function playSelected(i){
 			nextVideo(i);
 		}
-		
-		function createTrackList(){
-			var listing = "";
-			for (i = 0; i < movieList.length; i ++){
-				listing += ("<a href='#' class='track' onclick='playSelected(" + i + ")'>" + movieList[i].title + "</a><br />");
+
+		function createTrackList(myList){
+			var listing = "";			
+			for (i = 0; i < myList.length; i ++){				
+				listing += ("<a href='#' id='vid-" + i + "' class='track' onclick='playSelected(" + i + ")'>" + myList[i].title + "</a><br />");
 			}
 			t.innerHTML = listing;
 			
 		}
 		
 		// Load first video and description
-		nextVideo(0);
 		
-		// Create track list
-		createTrackList();	
+		makeRequest(getTrackList, 'tracklist.json');		
 	</script>
 	</body>
 </html>
