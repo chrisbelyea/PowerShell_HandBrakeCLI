@@ -88,7 +88,7 @@
 			
 		// Autoplay remaining videos
 		function nextVideo(i){	
-			if (i === tracklist.length) {
+			if (i === (tracklist.length - 1)) {
 				return
 				};
 			v.setAttribute('src','/video/' + tracklist[i].src);
@@ -105,13 +105,13 @@
 		}
 		
 		// Play selected video
-		function playSelected(i){
+		function playSelected(i){			
 			nextVideo(i);
 		}
 
 		function createTrackList(myList){
 			var listing = "";			
-			for (i = 0; i < myList.length; i ++){				
+			for (i = 0; i < (myList.length - 1); i ++){				
 				listing += ("<li class='track'><a href='#' id='vid-" + i + "' onclick='playSelected(" + i + ")'>" + myList[i].title + "</a></li>");
 			}
 			t.innerHTML = listing;
