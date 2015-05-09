@@ -13,6 +13,22 @@
 		body {
 			font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
 		}
+		
+		li.track {			
+			list-style-type: none;
+			padding: .5em;
+		}
+		
+		li.track:nth-of-type(2n) {
+			background-color: #f8f8f8;
+		}
+		
+		#description {
+			padding: .5em;
+			font-size: 120%;
+			background-color: #ddd;
+		}
+		
 	</style>
   </head>
   <body>
@@ -35,7 +51,7 @@
 			<div id="description"></div>
 		</div>
 		<div class="small-12 medium-6 large-3 columns">
-			<div id="playlist"></div>
+			<ul id="playlist"></ul>
 		</div>
     </div>
 
@@ -93,7 +109,7 @@
 		function createTrackList(myList){
 			var listing = "";			
 			for (i = 0; i < myList.length; i ++){				
-				listing += ("<a href='#' id='vid-" + i + "' class='track' onclick='playSelected(" + i + ")'>" + myList[i].title + "</a><br />");
+				listing += ("<li class='track'><a href='#' id='vid-" + i + "' onclick='playSelected(" + i + ")'>" + myList[i].title + "</a></li>");
 			}
 			t.innerHTML = listing;
 			
